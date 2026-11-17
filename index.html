@@ -66,8 +66,8 @@ footer{border-top:1px solid var(--line);padding:24px 0 40px;color:var(--muted);f
   <header>
     <div class="eyebrow">Improve &amp; Grow · Internal</div>
     <h1>Plugin Library</h1>
-    <p class="lede">The WordPress plugins, Elementor widgets and LeadHub apps our team has built. Each card covers what it does, what it needs, and where to get it.</p>
-    <div class="notice"><strong>Downloads need GitHub access.</strong> Every plugin lives in a private repo under <code>improveandgrowdev</code>. Sign in to GitHub with an account that has access, or the download link shows a 404. To install a WordPress plugin: <b>Plugins → Add New → Upload Plugin</b>, choose the zip, then <b>Activate</b>.</div>
+    <p class="lede">The WordPress plugins, themes and Elementor widgets our team has built. Each card covers what it does, what it needs, and where to get it.</p>
+    <div class="notice"><strong>Downloads need GitHub access.</strong> Every plugin lives in a private repo under <code>improveandgrowdev</code>. Sign in to GitHub with an account that has access, or the download link shows a 404. To install: <b>Plugins → Add New → Upload Plugin</b>, choose the zip, then <b>Activate</b>.</div>
   </header>
 
   <div class="toolbar">
@@ -85,7 +85,6 @@ const GH = "https://github.com/improveandgrowdev/";
 const TYPES = {
   wp:  { label: "WordPress plugin", cls: "t-wp" },
   el:  { label: "Elementor widget", cls: "t-el" },
-  hl:  { label: "LeadHub app",      cls: "t-hl" },
   dev: { label: "In development",   cls: "t-dev" }
 };
 
@@ -146,39 +145,6 @@ const PLUGINS = [
       "Respects “reduce motion” with a static, swipeable strip"
     ],
     req: "WordPress 6.0+, PHP 7.4+, Elementor (free)", setup: "Elementor panel → General"
-  },
-  {
-    repo: "leadhub-ga4-events", name: "LeadHub GA4 Events", type: "hl",
-    desc: "A private LeadHub Marketplace app that adds a Send GA4 Event action to workflows, so CRM milestones show up in Google Analytics 4.",
-    features: [
-      "Track events like <code>lead_qualified</code>, <code>appointment_booked</code> or <code>deal_won</code>",
-      "Ties events to the visitor's GA user and session when the GA Client ID is captured",
-      "Validates and retries sends; logs outcomes without contact details",
-      "Mark as key events in GA4 or import into Google Ads"
-    ],
-    req: "Hosted app, installed per sub-account from the Marketplace"
-  },
-  {
-    repo: "leadhub-onboarding", name: "LeadHub Onboarding", type: "hl",
-    desc: "An onboarding checklist that lives inside each client's LeadHub sub-account as a left-menu page.",
-    features: [
-      "One section per LeadHub feature, each task with step-by-step instructions and help links",
-      "Progress is shared by the team, with who ticked each item and when",
-      "Some items tick themselves (e.g. once every custom value is filled in)",
-      "Edit custom values in place and save them straight back to LeadHub"
-    ],
-    req: "Hosted app, installed per sub-account from the Marketplace"
-  },
-  {
-    repo: "highlevel-theme", name: "HighLevel Theme", type: "hl",
-    desc: "A live theme editor for the HighLevel dashboard, plus Theme Studio. Saving regenerates a hosted stylesheet that the agency view and every sub-account load.",
-    features: [
-      "Slide-out editor panel for admins, right on the dashboard",
-      "One loader script pasted into Agency Custom JS",
-      "Per-scope saves, so a sub-account can override the agency theme",
-      "Single-file Theme Studio for designing themes offline"
-    ],
-    req: "Hosted service; added through HighLevel Agency Custom JS"
   },
   {
     repo: "revision-checker", name: "Revision Checker", type: "dev",
