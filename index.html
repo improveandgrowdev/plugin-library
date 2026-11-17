@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Improve &amp; Grow Plugin Library</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f7f9;--surface:#fff;--text:#14171c;--muted:#5d6672;--line:#e3e6ea;
+  --accent:#1f7a4d;--accent-ink:#fff;--accent-soft:#e6f3ec;
+  --wp:#2f5fa7;--wp-soft:#e8eef8;--el:#9b2a63;--el-soft:#f6e7ef;--hl:#a35a00;--hl-soft:#fbefdf;--dev:#5d6672;--dev-soft:#eceef1;
+  --radius:12px;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#0f1216;--surface:#171b21;--text:#e8ebef;--muted:#9aa3ae;--line:#272d35;
+    --accent:#3fae77;--accent-ink:#06150d;--accent-soft:#16291f;
+    --wp:#8db2ec;--wp-soft:#1a2535;--el:#e58bb8;--el-soft:#2d1a24;--hl:#f0b062;--hl-soft:#2e2313;--dev:#9aa3ae;--dev-soft:#22272e;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.55 Inter,system-ui,-apple-system,sans-serif}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+header{padding:48px 0 24px}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+h1{font-size:clamp(28px,4vw,40px);line-height:1.15;margin:8px 0 10px;letter-spacing:-.02em}
+.lede{color:var(--muted);max-width:640px;margin:0}
+.notice{margin-top:20px;padding:12px 14px;border:1px solid var(--line);border-left:3px solid var(--accent);background:var(--surface);border-radius:8px;font-size:14px;color:var(--muted);max-width:760px}
+.notice strong{color:var(--text)}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:28px 0 18px}
+.search{flex:1 1 240px;min-width:0;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--text);font:inherit}
+.filters{display:flex;flex-wrap:wrap;gap:6px}
+.filters button{border:1px solid var(--line);background:var(--surface);color:var(--muted);padding:8px 12px;border-radius:999px;font:inherit;font-size:13px;cursor:pointer}
+.filters button[aria-pressed=true]{background:var(--text);color:var(--bg);border-color:var(--text)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;padding-bottom:48px}
+@media (max-width:400px){.grid{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px;display:flex;flex-direction:column;gap:12px}
+.card h2{font-size:18px;margin:0;letter-spacing:-.01em}
+.meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.tag{font-size:12px;font-weight:600;padding:3px 8px;border-radius:6px}
+.t-wp{color:var(--wp);background:var(--wp-soft)}.t-el{color:var(--el);background:var(--el-soft)}
+.t-hl{color:var(--hl);background:var(--hl-soft)}.t-dev{color:var(--dev);background:var(--dev-soft)}
+.ver{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.desc{margin:0;color:var(--muted)}
+ul{margin:0;padding-left:18px}
+li{margin:3px 0;font-size:14px}
+.req{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:10px}
+.req b{color:var(--text);font-weight:600}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border-radius:8px;font-weight:600;font-size:14px;text-decoration:none;border:1px solid var(--line)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn:hover{filter:brightness(1.05)}
+.btn:focus-visible,.filters button:focus-visible,.search:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+code{font:12.5px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--bg);padding:1px 5px;border-radius:4px}
+.empty{color:var(--muted);padding:24px 0}
+footer{border-top:1px solid var(--line);padding:24px 0 40px;color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Improve &amp; Grow · Internal</div>
+    <h1>Plugin Library</h1>
+    <p class="lede">The WordPress plugins, Elementor widgets and LeadHub apps our team has built. Each card covers what it does, what it needs, and where to get it.</p>
+    <div class="notice"><strong>Downloads need GitHub access.</strong> Every plugin lives in a private repo under <code>improveandgrowdev</code>. Sign in to GitHub with an account that has access, or the download link shows a 404. To install a WordPress plugin: <b>Plugins → Add New → Upload Plugin</b>, choose the zip, then <b>Activate</b>.</div>
+  </header>
+
+  <div class="toolbar">
+    <input class="search" id="q" type="search" placeholder="Search plugins…" aria-label="Search plugins">
+    <div class="filters" role="group" aria-label="Filter by type" id="filters"></div>
+  </div>
+
+  <main class="grid" id="grid" aria-live="polite"></main>
+
+  <footer>Maintained by the Improve &amp; Grow dev team. To add a plugin, edit the <code>PLUGINS</code> list in <code>index.html</code> in the <code>plugin-library</code> repo.</footer>
+</div>
+
+<script>
+const GH = "https://github.com/improveandgrowdev/";
+const TYPES = {
+  wp:  { label: "WordPress plugin", cls: "t-wp" },
+  el:  { label: "Elementor widget", cls: "t-el" },
+  hl:  { label: "LeadHub app",      cls: "t-hl" },
+  dev: { label: "In development",   cls: "t-dev" }
+};
+
+// Add new plugins here. "zip" is the release asset name; leave it out for apps that aren't downloaded.
+const PLUGINS = [
+  {
+    repo: "agent-markdown", name: "Agent Markdown", type: "wp", version: "1.0.0", zip: "agent-markdown-1.0.0.zip",
+    desc: "Serves a clean Markdown version of posts and pages so AI agents can read site content quickly, plus an llms.txt index.",
+    features: [
+      "Append <code>.md</code> to any URL, or use <code>?format=markdown</code> / <code>Accept: text/markdown</code>",
+      "<code>/llms.txt</code> site index (llmstxt.org)",
+      "YAML front matter with SEO descriptions from Yoast, Rank Math, AIOSEO or SEOPress",
+      "Per-post override: auto-generate, custom Markdown, or disabled",
+      "Markdown responses are noindex with a canonical link back to the page"
+    ],
+    req: "WordPress 6.0+, PHP 7.4+", setup: "Settings → Agent Markdown"
+  },
+  {
+    repo: "estimated-reading-time", name: "Estimated Reading Time", type: "wp", version: "1.0.1", zip: "estimated-reading-time-1.0.1.zip",
+    desc: "Shows an estimated reading time for posts, like “4 minute read”. Works with the block editor, classic editor and Elementor.",
+    features: [
+      "<code>[reading_time]</code> shortcode (plus <code>[readingtime_display]</code> alias)",
+      "Elementor dynamic tag: Post → Reading Time",
+      "Auto-insert above or below content on chosen post types",
+      "Counts text inside Elementor layouts, cached and cleared on save"
+    ],
+    req: "WordPress 5.8+, PHP 7.4+", setup: "Settings → Reading Time"
+  },
+  {
+    repo: "revision-counter", name: "Revision Counter", type: "wp", version: "1.1.1", zip: "revision-counter-1.1.1.zip",
+    desc: "Shows how many revisions each page or post has, as an admin list column and in the editor sidebar. Autosaves are excluded.",
+    features: [
+      "Sortable Revisions column on every post type that supports revisions",
+      "Count links straight to the revisions browser",
+      "Revision Count box in the editor sidebar",
+      "<code>rvc_supported_post_types</code> filter and REST field for developers"
+    ],
+    req: "WordPress 5.9+, PHP 7.4+"
+  },
+  {
+    repo: "room-aware-image", name: "Room Aware Image", type: "el", version: "1.3.0", zip: "room-aware-image-1.3.0.zip",
+    desc: "An Elementor widget that shows a post's featured image, then swaps to a matching ACF room image when a taxonomy filter is active on a Loop Grid.",
+    features: [
+      "Drop it into a Loop Item template and pick the filter taxonomy (defaults to <code>rooms</code>)",
+      "Per-term ACF images named <code>{term-slug}_featured_image</code>",
+      "Fades between images; falls back to the featured or fallback image",
+      "Fully responsive: <code>srcset</code>, <code>sizes</code>, width and height on every image"
+    ],
+    req: "Elementor (Loop Grid + Taxonomy Filter), ACF, PHP 7.4+"
+  },
+  {
+    repo: "marquee-ticker-for-elementor", name: "Marquee Ticker for Elementor", type: "el", version: "1.0.0", zip: "marquee-ticker-for-elementor-1.0.0.zip",
+    desc: "Adds a Marquee Ticker widget that scrolls text horizontally in a seamless loop.",
+    features: [
+      "Repeater of text items, each with an optional link",
+      "Separators: none, a text symbol, or an icon",
+      "Direction, speed, pause on hover and faded edges",
+      "Respects “reduce motion” with a static, swipeable strip"
+    ],
+    req: "WordPress 6.0+, PHP 7.4+, Elementor (free)", setup: "Elementor panel → General"
+  },
+  {
+    repo: "leadhub-ga4-events", name: "LeadHub GA4 Events", type: "hl",
+    desc: "A private LeadHub Marketplace app that adds a Send GA4 Event action to workflows, so CRM milestones show up in Google Analytics 4.",
+    features: [
+      "Track events like <code>lead_qualified</code>, <code>appointment_booked</code> or <code>deal_won</code>",
+      "Ties events to the visitor's GA user and session when the GA Client ID is captured",
+      "Validates and retries sends; logs outcomes without contact details",
+      "Mark as key events in GA4 or import into Google Ads"
+    ],
+    req: "Hosted app, installed per sub-account from the Marketplace"
+  },
+  {
+    repo: "leadhub-onboarding", name: "LeadHub Onboarding", type: "hl",
+    desc: "An onboarding checklist that lives inside each client's LeadHub sub-account as a left-menu page.",
+    features: [
+      "One section per LeadHub feature, each task with step-by-step instructions and help links",
+      "Progress is shared by the team, with who ticked each item and when",
+      "Some items tick themselves (e.g. once every custom value is filled in)",
+      "Edit custom values in place and save them straight back to LeadHub"
+    ],
+    req: "Hosted app, installed per sub-account from the Marketplace"
+  },
+  {
+    repo: "highlevel-theme", name: "HighLevel Theme", type: "hl",
+    desc: "A live theme editor for the HighLevel dashboard, plus Theme Studio. Saving regenerates a hosted stylesheet that the agency view and every sub-account load.",
+    features: [
+      "Slide-out editor panel for admins, right on the dashboard",
+      "One loader script pasted into Agency Custom JS",
+      "Per-scope saves, so a sub-account can override the agency theme",
+      "Single-file Theme Studio for designing themes offline"
+    ],
+    req: "Hosted service; added through HighLevel Agency Custom JS"
+  },
+  {
+    repo: "revision-checker", name: "Revision Checker", type: "dev",
+    desc: "Repo created, no code yet.",
+    features: [],
+    req: "Not yet released"
+  }
+];
+
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const grid = document.getElementById("grid"), q = document.getElementById("q"), filters = document.getElementById("filters");
+let active = "all";
+
+function card(p) {
+  const t = TYPES[p.type];
+  const dl = p.zip
+    ? `<a class="btn primary" href="${GH}${p.repo}/releases/download/v${p.version}/${p.zip}">Download .zip</a>
+       <a class="btn" href="${GH}${p.repo}/releases">Releases</a>`
+    : "";
+  return `<article class="card">
+    <div class="meta"><span class="tag ${t.cls}">${t.label}</span>${p.version ? `<span class="ver">v${esc(p.version)}</span>` : ""}</div>
+    <h2>${esc(p.name)}</h2>
+    <p class="desc">${esc(p.desc)}</p>
+    ${p.features.length ? `<ul>${p.features.map(f => `<li>${f}</li>`).join("")}</ul>` : ""}
+    <div class="req"><b>Requires:</b> ${esc(p.req)}${p.setup ? `<br><b>Settings:</b> ${esc(p.setup)}` : ""}</div>
+    <div class="actions">${dl}<a class="btn" href="${GH}${p.repo}">View repo</a></div>
+  </article>`;
+}
+
+function render() {
+  const term = q.value.trim().toLowerCase();
+  const list = PLUGINS.filter(p =>
+    (active === "all" || p.type === active) &&
+    (!term || (p.name + " " + p.desc + " " + p.features.join(" ")).toLowerCase().includes(term)));
+  grid.innerHTML = list.length ? list.map(card).join("") : `<p class="empty">No plugins match that search.</p>`;
+}
+
+const opts = [["all", "All"], ...Object.entries(TYPES).filter(([k]) => PLUGINS.some(p => p.type === k)).map(([k, v]) => [k, v.label + "s"])];
+filters.innerHTML = opts.map(([k, l]) => `<button type="button" data-k="${k}" aria-pressed="${k === "all"}">${l.replace("In developments", "In development")}</button>`).join("");
+filters.addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  active = b.dataset.k;
+  filters.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b));
+  render();
+});
+q.addEventListener("input", render);
+render();
+</script>
+</body>
+</html>
