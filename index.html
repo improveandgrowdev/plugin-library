@@ -84,8 +84,7 @@ footer{border-top:1px solid var(--line);padding:24px 0 40px;color:var(--muted);f
 const GH = "https://github.com/improveandgrowdev/";
 const TYPES = {
   wp:  { label: "WordPress plugin", cls: "t-wp" },
-  el:  { label: "Elementor widget", cls: "t-el" },
-  dev: { label: "In development",   cls: "t-dev" }
+  el:  { label: "Elementor widget", cls: "t-el" }
 };
 
 // Add new plugins here. "zip" is the release asset name; leave it out for apps that aren't downloaded.
@@ -145,12 +144,6 @@ const PLUGINS = [
       "Respects “reduce motion” with a static, swipeable strip"
     ],
     req: "WordPress 6.0+, PHP 7.4+, Elementor (free)", setup: "Elementor panel → General"
-  },
-  {
-    repo: "revision-checker", name: "Revision Checker", type: "dev",
-    desc: "Repo created, no code yet.",
-    features: [],
-    req: "Not yet released"
   }
 ];
 
