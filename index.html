@@ -79,8 +79,36 @@ section{scroll-margin-top:16px}
 .skill .cmd{align-self:flex-start;font:600 13px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--green-dark);background:var(--green-soft);padding:3px 8px;border-radius:6px}
 .skill .note{font-size:13px;color:#9a5b00}
 .skills-section .search{background:#fff}
+.skill{cursor:pointer;text-align:left;font:inherit;color:inherit;transition:box-shadow .2s,border-color .2s}
+.skill:hover{border-color:var(--green);box-shadow:0 8px 22px rgba(20,40,25,.08)}
+.skill:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+.skill .more{margin-top:auto;font-size:14px;font-weight:700;color:var(--green)}
+dialog.viewer{width:min(880px,calc(100vw - 32px));max-height:calc(100vh - 48px);padding:0;border:0;border-radius:14px;box-shadow:0 24px 60px rgba(0,0,0,.25);color:var(--text)}
+dialog.viewer::backdrop{background:rgba(30,35,32,.55)}
+.vhead{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);padding:16px 20px;display:flex;gap:12px;align-items:flex-start;justify-content:space-between;z-index:1}
+.vhead h2{font-family:var(--serif);font-weight:800;color:var(--heading);font-size:24px;margin:0 0 4px;line-height:1.2}
+.vtools{display:flex;gap:8px;flex-shrink:0}
+.vtools button,.vtools a{border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 12px;font:600 14px var(--sans);color:var(--heading);cursor:pointer;text-decoration:none}
+.vtools .close{font-size:18px;line-height:1;padding:7px 11px}
+dialog.viewer{overflow:auto}
+.vbody{padding:8px 24px 28px;overflow-wrap:anywhere}
+.vbody .fm{background:var(--bg-soft);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:14px;margin:16px 0}
+.md h1,.md h2,.md h3,.md h4{font-family:var(--serif);color:var(--heading);line-height:1.25;margin:1.4em 0 .5em}
+.md h1{font-size:26px}.md h2{font-size:22px}.md h3{font-size:18px}.md h4{font-size:16px}
+.md p,.md li{font-size:15.5px}
+.md ul,.md ol{padding-left:22px;list-style:revert}
+.md li{padding-left:0}.md li::before{display:none}
+.md pre{background:#1f2522;color:#e8ece9;padding:14px;border-radius:10px;overflow-x:auto;font-size:13px}
+.md pre code{background:none;color:inherit;padding:0}
+.md table{border-collapse:collapse;width:100%;display:block;overflow-x:auto;font-size:14px;margin:12px 0}
+.md th,.md td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}
+.md th{background:var(--bg-soft);color:var(--heading)}
+.md blockquote{margin:12px 0;padding:4px 14px;border-left:4px solid var(--orange);background:var(--orange-soft)}
+.md a{color:var(--green)}
 footer{border-top:1px solid var(--line);padding:24px 0 40px;font-size:14px}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js"></script>
 </head>
 <body>
 <div class="topbar"><div class="wrap">
@@ -106,13 +134,21 @@ footer{border-top:1px solid var(--line);padding:24px 0 40px;font-size:14px}
 </div></section>
 
 <section id="skills" class="skills-section"><div class="wrap">
-  <div class="section-head"><div class="eyebrow">Claude</div><h2>Claude skills</h2><p>Skills our team has built for Claude. They sync to everyone in the Improve &amp; Grow Claude organization automatically, so there's nothing to install. Type the <code>/command</code> in Claude, or just ask for the task and Claude picks the skill up.</p></div>
+  <div class="section-head"><div class="eyebrow">Claude</div><h2>Claude skills</h2><p>Skills our team has built for Claude. Click any skill to read its full instructions. They sync to everyone in the Improve &amp; Grow Claude organization automatically, so there's nothing to install. Type the <code>/command</code> in Claude, or just ask for the task and Claude picks the skill up.</p></div>
   <div class="toolbar">
     <input class="search" id="sq" type="search" placeholder="Search skills…" aria-label="Search skills">
     <div class="filters" role="group" aria-label="Filter skills by category" id="sfilters"></div>
   </div>
   <div id="sgroups" aria-live="polite"></div>
 </div></section>
+
+<dialog class="viewer" id="viewer" aria-labelledby="vtitle">
+  <div class="vhead">
+    <div><h2 id="vtitle"></h2><span class="cmd" id="vcmd" style="font:600 13px ui-monospace,Menlo,monospace;color:var(--green-dark);background:var(--green-soft);padding:3px 8px;border-radius:6px"></span></div>
+    <div class="vtools"><button type="button" id="vcopy">Copy</button><a id="vraw" target="_blank" rel="noopener">Raw .md</a><button type="button" class="close" id="vclose" aria-label="Close">×</button></div>
+  </div>
+  <div class="vbody"><div id="vfm"></div><div class="md" id="vmd">Loading…</div></div>
+</dialog>
 
 <div class="wrap">
   <footer>Maintained by the Improve &amp; Grow dev team. To add a plugin or skill, edit the <code>PLUGINS</code> or <code>SKILLS</code> list in <code>index.html</code> in the <code>plugin-library</code> repo.</footer>
@@ -278,7 +314,7 @@ const SKILLS = [
 const sq = document.getElementById("sq"), sfilters = document.getElementById("sfilters"), sgroups = document.getElementById("sgroups");
 let sactive = "all";
 function skillCard(k) {
-  return `<article class="skill"><h4>${esc(k.name)}</h4><span class="cmd">/${esc(k.cmd)}</span><p>${esc(k.desc)}</p>${k.note ? `<p class="note">${esc(k.note)}</p>` : ""}</article>`;
+  return `<article class="skill" role="button" tabindex="0" aria-label="Read the ${esc(k.name)} skill" data-cmd="${esc(k.cmd)}"><h4>${esc(k.name)}</h4><span class="cmd">/${esc(k.cmd)}</span><p>${esc(k.desc)}</p>${k.note ? `<p class="note">${esc(k.note)}</p>` : ""}<span class="more">Read the skill →</span></article>`;
 }
 function renderSkills() {
   const term = sq.value.trim().toLowerCase();
@@ -296,6 +332,47 @@ sfilters.addEventListener("click", e => {
   renderSkills();
 });
 sq.addEventListener("input", renderSkills);
+
+// Skill viewer: shows skills/<cmd>.md (copies with client details redacted)
+const viewer = document.getElementById("viewer"), vmd = document.getElementById("vmd"), vfm = document.getElementById("vfm");
+let rawText = "";
+async function openSkill(cmd, push = true) {
+  const k = SKILLS.find(x => x.cmd === cmd); if (!k) return;
+  document.getElementById("vtitle").textContent = k.name;
+  document.getElementById("vcmd").textContent = "/" + k.cmd;
+  document.getElementById("vraw").href = "skills/" + k.cmd + ".md";
+  vfm.innerHTML = ""; vmd.textContent = "Loading…"; rawText = "";
+  if (!viewer.open) viewer.showModal();
+  if (push) history.replaceState(null, "", "#skill/" + cmd);
+  try {
+    const r = await fetch("skills/" + encodeURIComponent(cmd) + ".md");
+    if (!r.ok) throw new Error(r.status);
+    rawText = await r.text();
+    let body = rawText;
+    const m = body.match(/^---\n([\s\S]*?)\n---\n?/);
+    if (m) {
+      body = body.slice(m[0].length);
+      const fm = m[1].replace(/^name:.*$/m, "").trim();
+      if (fm) vfm.innerHTML = `<div class="fm"><b>Frontmatter</b><pre style="white-space:pre-wrap;margin:6px 0 0;font:13px ui-monospace,Menlo,monospace">${esc(fm)}</pre></div>`;
+    }
+    vmd.innerHTML = window.marked && window.DOMPurify
+      ? DOMPurify.sanitize(marked.parse(body))
+      : `<pre style="white-space:pre-wrap">${esc(body)}</pre>`;
+    viewer.querySelector(".vbody").scrollTop = 0;
+  } catch (e) {
+    vmd.innerHTML = `<p class="empty">Couldn't load this skill's file.</p>`;
+  }
+}
+sgroups.addEventListener("click", e => { const b = e.target.closest(".skill"); if (b) openSkill(b.dataset.cmd); });
+sgroups.addEventListener("keydown", e => { const b = e.target.closest(".skill"); if (b && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); openSkill(b.dataset.cmd); } });
+document.getElementById("vclose").addEventListener("click", () => viewer.close());
+viewer.addEventListener("click", e => { if (e.target === viewer) viewer.close(); });
+viewer.addEventListener("close", () => { if (location.hash.startsWith("#skill/")) history.replaceState(null, "", "#skills"); });
+document.getElementById("vcopy").addEventListener("click", async e => {
+  try { await navigator.clipboard.writeText(rawText); e.target.textContent = "Copied"; } catch { e.target.textContent = "Couldn't copy"; }
+  setTimeout(() => e.target.textContent = "Copy", 1500);
+});
+if (location.hash.startsWith("#skill/")) { document.getElementById("skills").scrollIntoView(); openSkill(decodeURIComponent(location.hash.slice(7)), false); }
 renderSkills();
 document.getElementById("pc").textContent = PLUGINS.length;
 document.getElementById("sc").textContent = SKILLS.length;
