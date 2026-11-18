@@ -39,7 +39,7 @@ h1 em{font-style:normal;color:var(--green);background:linear-gradient(transparen
 @media (max-width:400px){.grid{grid-template-columns:1fr}}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:12px;box-shadow:0 1px 2px rgba(20,40,25,.04);transition:box-shadow .2s,transform .2s}
 .card:hover{box-shadow:0 10px 28px rgba(20,40,25,.08);transform:translateY(-2px)}
-.card h2{font-family:var(--serif);font-weight:700;color:var(--heading);font-size:22px;line-height:1.25;margin:0}
+.card .ptitle{font-family:var(--serif);font-weight:700;color:var(--heading);font-size:22px;line-height:1.25;margin:0}
 .meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .tag{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:6px}
 .t-wp{color:var(--green-dark);background:var(--green-soft)}.t-el{color:#9a5b00;background:var(--orange-soft)}
@@ -59,6 +59,26 @@ li::before{content:"";position:absolute;left:4px;top:.62em;width:8px;height:8px;
 .btn:focus-visible,.filters button:focus-visible,.search:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
 code{font:13px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--bg-soft);color:var(--heading);padding:1px 5px;border-radius:4px}
 .empty{padding:24px 0}
+.jump{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.jump a{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:10px;font-weight:700;text-decoration:none;background:#fff;border:1px solid var(--line);color:var(--heading)}
+.jump a:first-child{background:var(--green);border-color:var(--green);color:#fff}
+.jump .count{font-size:12px;font-weight:700;background:rgba(0,0,0,.08);padding:1px 7px;border-radius:999px}
+section{scroll-margin-top:16px}
+.section-head{padding-top:48px}
+.section-head h2{font-family:var(--serif);font-weight:800;color:var(--heading);font-size:clamp(28px,4vw,38px);line-height:1.15;margin:6px 0 8px}
+.section-head p{margin:0;max-width:680px}
+.skills-section{background:var(--bg-soft);border-top:1px solid var(--line);margin-top:8px}
+.group{margin-bottom:36px}
+.group h3{font-family:var(--serif);font-weight:700;color:var(--heading);font-size:21px;margin:0 0 4px}
+.group > p{margin:0 0 14px;font-size:15px}
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+@media (max-width:400px){.sgrid{grid-template-columns:1fr}}
+.skill{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:8px}
+.skill h4{margin:0;font-family:var(--serif);font-weight:700;color:var(--heading);font-size:18px;line-height:1.3}
+.skill p{margin:0;font-size:15px}
+.skill .cmd{align-self:flex-start;font:600 13px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--green-dark);background:var(--green-soft);padding:3px 8px;border-radius:6px}
+.skill .note{font-size:13px;color:#9a5b00}
+.skills-section .search{background:#fff}
 footer{border-top:1px solid var(--line);padding:24px 0 40px;font-size:14px}
 </style>
 </head>
@@ -69,21 +89,33 @@ footer{border-top:1px solid var(--line);padding:24px 0 40px;font-size:14px}
 <div class="hero"><div class="wrap">
   <header>
     <div class="eyebrow">Improve &amp; Grow · Internal</div>
-    <h1>Our WordPress <em>plugin library</em></h1>
-    <p class="lede">The WordPress plugins, themes and Elementor widgets our team has built. Each card covers what it does, what it needs, and where to get it.</p>
-    <div class="notice"><strong>Downloads need GitHub access.</strong> Every plugin lives in a private repo under <code>improveandgrowdev</code>. Sign in to GitHub with an account that has access, or the download link shows a 404. To install: <b>Plugins → Add New → Upload Plugin</b>, choose the zip, then <b>Activate</b>.</div>
+    <h1>Our plugin &amp; <em>skill library</em></h1>
+    <p class="lede">The WordPress plugins, Elementor widgets and Claude skills our team has built, with what each one does and how to use it.</p>
+    <nav class="jump" aria-label="Sections"><a href="#plugins">WordPress plugins <span class="count" id="pc"></span></a><a href="#skills">Claude skills <span class="count" id="sc"></span></a></nav>
+    <div class="notice"><strong>Plugin downloads need GitHub access.</strong> Every plugin lives in a private repo under <code>improveandgrowdev</code>. Sign in to GitHub with an account that has access, or the download link shows a 404. To install: <b>Plugins → Add New → Upload Plugin</b>, choose the zip, then <b>Activate</b>.</div>
   </header>
 </div></div>
-<div class="wrap">
-
+<section id="plugins"><div class="wrap">
+  <div class="section-head"><div class="eyebrow">WordPress</div><h2>Plugins &amp; widgets</h2><p>Install-ready plugins for client sites. Download the zip and upload it in WordPress.</p></div>
   <div class="toolbar">
     <input class="search" id="q" type="search" placeholder="Search plugins…" aria-label="Search plugins">
     <div class="filters" role="group" aria-label="Filter by type" id="filters"></div>
   </div>
 
-  <main class="grid" id="grid" aria-live="polite"></main>
+  <div class="grid" id="grid" aria-live="polite"></div>
+</div></section>
 
-  <footer>Maintained by the Improve &amp; Grow dev team. To add a plugin, edit the <code>PLUGINS</code> list in <code>index.html</code> in the <code>plugin-library</code> repo.</footer>
+<section id="skills" class="skills-section"><div class="wrap">
+  <div class="section-head"><div class="eyebrow">Claude</div><h2>Claude skills</h2><p>Skills our team has built for Claude. They sync to everyone in the Improve &amp; Grow Claude organization automatically, so there's nothing to install. Type the <code>/command</code> in Claude, or just ask for the task and Claude picks the skill up.</p></div>
+  <div class="toolbar">
+    <input class="search" id="sq" type="search" placeholder="Search skills…" aria-label="Search skills">
+    <div class="filters" role="group" aria-label="Filter skills by category" id="sfilters"></div>
+  </div>
+  <div id="sgroups" aria-live="polite"></div>
+</div></section>
+
+<div class="wrap">
+  <footer>Maintained by the Improve &amp; Grow dev team. To add a plugin or skill, edit the <code>PLUGINS</code> or <code>SKILLS</code> list in <code>index.html</code> in the <code>plugin-library</code> repo.</footer>
 </div>
 
 <script>
@@ -165,7 +197,7 @@ function card(p) {
     : "";
   return `<article class="card">
     <div class="meta"><span class="tag ${t.cls}">${t.label}</span>${p.version ? `<span class="ver">v${esc(p.version)}</span>` : ""}</div>
-    <h2>${esc(p.name)}</h2>
+    <h3 class="ptitle">${esc(p.name)}</h3>
     <p class="desc">${esc(p.desc)}</p>
     ${p.features.length ? `<ul>${p.features.map(f => `<li>${f}</li>`).join("")}</ul>` : ""}
     <div class="req"><b>Requires:</b> ${esc(p.req)}${p.setup ? `<br><b>Settings:</b> ${esc(p.setup)}` : ""}</div>
@@ -191,6 +223,82 @@ filters.addEventListener("click", e => {
 });
 q.addEventListener("input", render);
 render();
+
+// Claude skills. "group" must match a key in SKILL_GROUPS.
+const SKILL_GROUPS = {
+  report: { label: "Reporting", blurb: "Monthly client reports and daily site checks." },
+  audit:  { label: "Audits & diagnostics", blurb: "Look into tracking, analytics, SEO and UX problems on a client site." },
+  gap:    { label: "Growth Action Plan (GAP)", blurb: "Build each part of a client's Growth Action Plan deck. Start with GAP Project Guide, which calls the others in order." },
+  brand:  { label: "Brand & client docs", blurb: "Brand standards, slides and client onboarding docs." },
+  wp:     { label: "WordPress", blurb: "Hands-on edits to client WordPress sites." }
+};
+const SKILLS = [
+  { cmd: "web-maintenance-report", name: "Web Maintenance Report", group: "report", desc: "Builds a client's monthly website maintenance report from WP Umbrella, Databox, PageSpeed Insights and Microsoft Clarity: performance, issues, updates, security, UX friction and recommendations." },
+  { cmd: "client-report-builder", name: "Client Report Builder", group: "report", desc: "Generates a client's monthly marketing progress report from their finalized Client Report Spec." },
+  { cmd: "client-report-spec-builder", name: "Client Report Spec Builder", group: "report", desc: "Builds or updates a client's Report Spec by checking their ClickUp contract and services, which ad and analytics platforms are connected, and their context docs." },
+  { cmd: "fleet-brief", name: "Fleet Brief", group: "report", desc: "Morning health check across every CaptainCore-managed client site: sites down, WordPress and domain issues. Add full, report or js for deeper checks." },
+  { cmd: "ig-clarity-ux-friction-report", name: "Clarity UX Friction Report", group: "audit", desc: "30-day summary of rage clicks, dead clicks, excessive scrolling, quick backs and JavaScript errors from Microsoft Clarity, with recommendations." },
+  { cmd: "ig-marketing-tag-checker", name: "Marketing Tag Checker", group: "audit", desc: "Checks a site's homepage for analytics and ad tracking tags (GA4, GTM, Meta Pixel, LinkedIn, TikTok, Clarity, HubSpot and more) and flags missing or duplicate tags." },
+  { cmd: "ig-measurement-integrity-check", name: "Measurement Integrity Check", group: "audit", desc: "Confirms a client's Search Console and GA4 data can support a conclusion before anyone draws one: data window, the right GSC property, and dead or new conversion events." },
+  { cmd: "ig-organic-search-diagnostic", name: "Organic Search Diagnostic", group: "audit", desc: "Evidence-first check of whether a client really has an organic search problem, separating ranking loss from demand shifts, SERP and CTR changes, and paid cannibalization." },
+  { cmd: "ahrefs-site-audit", name: "Ahrefs Site Audit", group: "audit", desc: "Pulls and explains Ahrefs Site Audit data for a site: health score, crawl issues and what to fix first." },
+  { cmd: "pagespeed-insights-report", name: "PageSpeed Insights Report", group: "audit", desc: "Runs PageSpeed Insights for a URL and returns mobile and desktop scores, Core Web Vitals and top fixes in a report-ready table." },
+  { cmd: "databox-conversion-event-check", name: "Databox Conversion Event Check", group: "audit", desc: "Checks whether a Databox client's conversion events are still firing, with 28-day and 90-day freshness windows." },
+  { cmd: "databox-ga4-event-check", name: "Databox GA4 Event Check", group: "audit", desc: "28-day freshness check on a Databox client's GA4 conversion events.", note: "Older version: use Databox Conversion Event Check instead." },
+  { cmd: "gap-project-guide", name: "GAP Project Guide", group: "gap", desc: "Runs a whole Growth Action Plan project from intake to handoff: tracks what's done, ready or blocked, and calls the right GAP skill at each step." },
+  { cmd: "growth-action-plan", name: "Growth Action Plan", group: "gap", desc: "Produces a client's annual GAP: a 12-month retrospective plus a forward strategy and investment proposal." },
+  { cmd: "gap-organization-overview", name: "Organization Overview", group: "gap", desc: "The slide on who the client is and what they offer." },
+  { cmd: "gap-revenue-breakdown", name: "Revenue Breakdown", group: "gap", desc: "Current annual revenue and volume by revenue stream, the future goal, and the year-over-year change." },
+  { cmd: "gap-growth-goals-math", name: "Growth Goals Math", group: "gap", desc: "Turns each revenue goal into what marketing has to generate: inquiries, bookings, enrollments, orders or calls." },
+  { cmd: "gap-keyword-research", name: "Keyword Research", group: "gap", desc: "Takes seed keywords to a categorized, approved keyword list and the Keyword Research slide." },
+  { cmd: "gap-competitor-share-of-voice", name: "Competitor Share of Voice", group: "gap", desc: "Share of voice from Ahrefs Rank Tracker for the client's direct competitors, charted for the deck." },
+  { cmd: "gap-competitor-seo-stats", name: "Competitor SEO Stats", group: "gap", desc: "Ahrefs figures for the client and competitors: organic visits, ranking keywords and pages, top-3 keywords and referring domains." },
+  { cmd: "gap-competitor-website-review", name: "Competitor Website Review", group: "gap", desc: "Rates each competitor's website on UX, content, technical SEO and conversion." },
+  { cmd: "gap-market-research-summary", name: "Market Research Summary", group: "gap", desc: "The closing summary slide for market research: demand, competition and opportunity for each revenue stream." },
+  { cmd: "gap-seo-overview", name: "SEO Overview", group: "gap", desc: "Boils a site's organic search performance down to 5 slide bullets: authority, keywords, traffic and suggestions." },
+  { cmd: "gap-site-audit", name: "Site Audit (Website Health)", group: "gap", desc: "Summarizes the latest Ahrefs Site Audit, picks the top 5 issues to fix, and builds the Website Health slide." },
+  { cmd: "gap-website-audit", name: "Website & Content Audit", group: "gap", desc: "Section-by-section audit using our Website & Content Audit framework, with a score workbook and a two-slide summary." },
+  { cmd: "gap-website-analytics", name: "Website Analytics", group: "gap", desc: "Analyzes GA4 and builds the 3-slide summary: performance, channel breakdown and recommended improvements." },
+  { cmd: "gap-local-search-audit", name: "Local Search Audit", group: "gap", desc: "Google Business Profile audit and local map heatmaps from the HighLevel Prospect Audit or BrightLocal." },
+  { cmd: "gap-google-ads-grant-audit", name: "Google Ad Grant Audit", group: "gap", desc: "Audits a client's or prospect's Google Ad Grant account for the GAP." },
+  { cmd: "gap-google-ads-commercial-audit", name: "Google Ads Commercial Audit", group: "gap", desc: "Audits a paid (non-Grant) Google Ads account for the GAP." },
+  { cmd: "gap-marketing-plan", name: "Marketing Plan", group: "gap", desc: "The Build-phase plan: website work, landing pages, ad and SEO setup, LeadHub/CRM and tracking." },
+  { cmd: "gap-budget-roi-model", name: "Budget & ROI Model", group: "gap", desc: "A 3-year budget and ROI Excel model with live formulas, plus the Investment slides." },
+  { cmd: "gap-deck-assembly", name: "Deck Assembly", group: "gap", desc: "Puts the finished slides into one deck in the standard order, with dividers, next steps and the I&G appendix." },
+  { cmd: "gap-speaker-notes", name: "Speaker Notes", group: "gap", desc: "Adds speaker notes where they're missing and reformats existing ones so they're easy to scan." },
+  { cmd: "gap-deck-review", name: "Deck Review", group: "gap", desc: "Final check before the deck goes to the client: inconsistencies, stale data and numbers that don't match the budget model." },
+  { cmd: "improve-and-grow-brand", name: "Improve & Grow Brand", group: "brand", desc: "The source of truth for how I&G looks and sounds: colors, type, voice and writing rules, logos, photos and templates." },
+  { cmd: "ig-deck-style", name: "I&G Deck Style", group: "brand", desc: "Builds slides in the I&G brand, including section breaks, KPI cards and charts to paste into Google Slides." },
+  { cmd: "brand-messaging-guide", name: "Brand Messaging Guide", group: "brand", desc: "Builds a client's Brand Messaging Guide one section at a time and writes each approved section into their ClickUp Doc." },
+  { cmd: "client-onboarding-overview", name: "Client Onboarding Overview", group: "brand", desc: "Fills in a client's ClickUp Client Overview doc from their LeadHub onboarding survey and Camp Growth Planner." },
+  { cmd: "ig-marker-io-content-update", name: "Marker.io Content Update", group: "wp", desc: "Finds open Marker.io requests for copy or title changes and makes the edits on client sites that are connected to Claude." },
+  { cmd: "divi-edit", name: "Divi Edit", group: "wp", desc: "Edits, optimizes and migrates WordPress sites built with Divi, including Divi 5 migration." }
+];
+
+const sq = document.getElementById("sq"), sfilters = document.getElementById("sfilters"), sgroups = document.getElementById("sgroups");
+let sactive = "all";
+function skillCard(k) {
+  return `<article class="skill"><h4>${esc(k.name)}</h4><span class="cmd">/${esc(k.cmd)}</span><p>${esc(k.desc)}</p>${k.note ? `<p class="note">${esc(k.note)}</p>` : ""}</article>`;
+}
+function renderSkills() {
+  const term = sq.value.trim().toLowerCase();
+  const html = Object.entries(SKILL_GROUPS).filter(([g]) => sactive === "all" || g === sactive).map(([g, info]) => {
+    const list = SKILLS.filter(k => k.group === g && (!term || (k.name + " " + k.cmd + " " + k.desc).toLowerCase().includes(term)));
+    return list.length ? `<div class="group"><h3>${esc(info.label)}</h3><p>${esc(info.blurb)}</p><div class="sgrid">${list.map(skillCard).join("")}</div></div>` : "";
+  }).join("");
+  sgroups.innerHTML = html || `<p class="empty">No skills match that search.</p>`;
+}
+sfilters.innerHTML = [["all", "All"], ...Object.entries(SKILL_GROUPS).map(([k, v]) => [k, v.label])].map(([k, l]) => `<button type="button" data-k="${k}" aria-pressed="${k === "all"}">${esc(l)}</button>`).join("");
+sfilters.addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  sactive = b.dataset.k;
+  sfilters.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b));
+  renderSkills();
+});
+sq.addEventListener("input", renderSkills);
+renderSkills();
+document.getElementById("pc").textContent = PLUGINS.length;
+document.getElementById("sc").textContent = SKILLS.length;
 </script>
 </body>
 </html>
